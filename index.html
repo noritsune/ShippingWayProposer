@@ -9,7 +9,42 @@
 </head>
 <body>
     <div id="content">
-        <h3 id="title"><span>メルカリ配送方法</span><span>判定ツール</span></h3>
+        <h4 id="title"><span>メルカリ配送方法</span><span>判定ツール</span></h4>
+
+        <form id="inputForm">
+            <div class="wight">
+                <label for="weight"><h5>重さ(g)</h5></label>
+
+                <input type="number" id="weight" class="form-control weight">
+            </div>
+
+            <div class="size">
+                <h5>大きさ(cm)</h5>
+                
+                <div class="form-inline">
+                    <div class="element">
+                        <label for="width">幅</label>
+
+                        <input type="number" id="width" class="form-control">
+                    </div>
+                    
+                    <div class="element">
+                        <label for="depth">奥行き</label>
+
+                        <input type="number" id="depth" class="form-control">
+                    </div>
+
+                    <div class="element">
+                        <label for="height">高さ</label>
+                        
+                        <input type="number" id="height" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">配送方法を比較する</button>
+        </form>
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

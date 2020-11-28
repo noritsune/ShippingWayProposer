@@ -48,3 +48,19 @@ span {
     background: #f7dddc;
     box-shadow:  5px 5px 15px #d5b8b7;
 }
+
+input#weight, input#width, input#depth, input#height {
+    width: 5rem;
+}
+
+#inputForm .size {
+    margin-top: 20px;
+}
+
+#inputForm .size .element {
+    margin: 5px;
+}
+
+#inputForm button{
+    margin-top: 20px;
+}
