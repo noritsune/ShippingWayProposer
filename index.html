@@ -12,38 +12,38 @@
     <div id="content">
         <h4 id="title"><span>メルカリ配送方法</span><span>判定ツール</span></h4>
 
-        <form id="inputForm">
+        <form id="inputForm" onsubmit="return false">
             <div class="wight">
-                <label for="weight"><h5>重さ(g)</h5></label>
+                <h5><label for="weight" class="required">重さ(g)</label></h5>
 
-                <input type="number" id="weight" class="form-control weight">
+                <input type="number" id="weight" class="form-control weight" required>
             </div>
 
             <div class="size">
-                <h5>大きさ(cm)</h5>
+                <h5><label  class="required">大きさ(cm)</label></h5>
                 
                 <div class="form-inline">
                     <div class="element">
                         <label for="width">幅</label>
 
-                        <input type="number" id="width" class="form-control">
+                        <input type="number" id="width" class="form-control" required>
                     </div>
                     
                     <div class="element">
                         <label for="depth">奥行き</label>
 
-                        <input type="number" id="depth" class="form-control">
+                        <input type="number" id="depth" class="form-control" required>
                     </div>
 
                     <div class="element">
                         <label for="height">高さ</label>
 
-                        <input type="number" id="height" class="form-control">
+                        <input type="number" id="height" class="form-control" required>
                     </div>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="GetInput()">配送方法を比較する</button>
+            <button type="submit" class="btn btn-primary" onclick="GetInput()">配送方法を比較する</button>
         </form>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
