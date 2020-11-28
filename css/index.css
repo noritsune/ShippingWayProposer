@@ -7,14 +7,6 @@ span {
     display: inline-block;
 }
 
-#content {
-    height: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    background: #fbd9d7;
-    box-shadow:  5px 5px 15px #d5b8b7;
-}
-
 #title {
     width: fit-content;
     margin: auto;
@@ -63,4 +55,18 @@ input#weight, input#width, input#depth, input#height {
 
 #inputForm button{
     margin-top: 20px;
+}
+
+label {
+    display: block;
+}
+  
+label.required:after {
+    margin-left: 1.0em;
+    padding: 0px 6px 0px 6px;
+    border-radius: 4px;
+    font-size: 0.6em;
+    color: white;
+    background-color: #C44;
+    content: "必須";
 }
