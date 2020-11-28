@@ -1,6 +1,7 @@
 body {
     padding: 10px;
     height: 100vh;
+    text-align: center;
 }
 
 span {
@@ -9,7 +10,6 @@ span {
 
 #title {
     width: fit-content;
-    margin: auto;
     text-align: center;
     padding: 10px;
     border-radius: 11px;
@@ -33,7 +33,8 @@ span {
 }
 
 #inputForm {
-    margin: 10px;
+    max-width: 500px;
+    margin: auto;
     margin-top: 20px;
     padding: 10px;
     border-radius: 10px;
@@ -41,8 +42,17 @@ span {
     box-shadow:  5px 5px 15px #d5b8b7;
 }
 
+#weight {
+    margin: auto;
+}
+
 input#weight, input#width, input#depth, input#height {
     width: 5rem;
+}
+
+#sizeInputWrap {
+    width: fit-content;
+    margin: auto;
 }
 
 #inputForm .size {
