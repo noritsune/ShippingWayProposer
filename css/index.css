@@ -1,0 +1,26 @@
+body {
+    padding: 10px;
+    height: 100vh;
+}
+
+span {
+    display: inline-block;
+}
+
+#content {
+    height: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background: #fbd9d7;
+    box-shadow:  5px 5px 15px #d5b8b7;
+}
+
+#title {
+    color: #fbd9d7;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 11px;
+    background: #ea352d;
+    box-shadow:  5px 5px 7px #851e1a;
+}
