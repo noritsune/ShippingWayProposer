@@ -80,3 +80,12 @@ label.required:after {
     background-color: #C44;
     content: "必須";
 }
+
+#result {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    background: #ecd982;
+    box-shadow:  5px 5px 15px #d5b8b7;
+}

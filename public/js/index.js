@@ -31,7 +31,13 @@ function ShowShippingWay() {
     //TODO: 配送方法を表示する
     let param = new Param(input.weight, input.width, input.depth, input.height);
     let nekopos = new Nekopos();
-    console.log("費用：" + nekopos.GetCost(param) + "円");
+    let cost = nekopos.GetCost(param);
+    const resultText = document.getElementById("result");
+    if(cost > 0) {
+        resultText.innerText = "費用：" + cost + "円";
+    } else {
+        resultText.innerText = "送れません";
+    }
 }
 
 class Param{
