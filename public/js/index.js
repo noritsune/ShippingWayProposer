@@ -32,9 +32,10 @@ function ShowShippingWay() {
     document.getElementById("resultList").innerHTML = "";
 
 
-    let param = new Param(input.weight, input.width, input.depth, input.height);
+    let param = new Param(parseFloat(input.weight), parseFloat(input.width), parseFloat(input.depth), parseFloat(input.height));
     let shippingWays = [
-        new Nekopos()
+        new Nekopos(),
+        new YuPacket()
     ];
 
     let results = []
@@ -47,8 +48,10 @@ function ShowShippingWay() {
     });
 
     results.sort(function(a,b){
-        if(a.cost < b.cost) return -1;
-        if(a.cost > b.cost) return 1;
+        if(a.cost == null) return 1;
+        
+        if(a.cost < b.cost) return 1;
+        if(a.cost > b.cost) return -1;
         return 0;
     });
 
@@ -63,10 +66,10 @@ function AddResultElement(name, cost) {
     const after = "</li></h5>";
     
     let middle = "名前：" + name;
-    if(cost > 0) {
-        middle += ", 費用：" + cost + "円"
-    } else {
+    if(cost == null) {
         middle += ", 送れません";
+    } else {
+        middle += ", 費用：" + cost + "円"
     }
 
     resultList.insertAdjacentHTML("afterbegin", before + middle + after);
@@ -85,7 +88,7 @@ class ShippingWay {
     constructor() {
         
         this.name = "なし";
-        this.cost = -1;
+        this.cost = null;
     }
 
     //価格を返す。送れない場合は-1を返す
@@ -125,9 +128,42 @@ class Nekopos extends ShippingWay {
             if (!this.paramRanges.hasOwnProperty(key))  return;
 
             if(this.paramRanges[key].IsOutOfRange(param[key])) {
-                return -1;
+                return null;
             }
         }
+
+        return this.cost;
+    }
+}
+
+class YuPacket extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "ゆうパケット";
+        this.cost = 200;
+
+        this.paramRanges = {
+            weight: new ParamRange(0, 1000),
+            vertical: new ParamRange(0, 34),
+            horizontal: new ParamRange(0, 34),
+            thickness: new ParamRange(0, 3)
+        };
+
+        this.totalLengthLimit = 60;
+    }
+
+    GetCost(param) {
+        for (const key in param) {
+            if (!this.paramRanges.hasOwnProperty(key))  return;
+
+            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+                return null;
+            }
+        }
+        
+        const totalLength = param.vertical + param.horizontal + param.thickness;
+        if(totalLength > this.totalLengthLimit) return null;
 
         return this.cost;
     }
