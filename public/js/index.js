@@ -35,7 +35,8 @@ function ShowShippingWay() {
     let param = new Param(parseFloat(input.weight), parseFloat(input.width), parseFloat(input.depth), parseFloat(input.height));
     let shippingWays = [
         new Nekopos(),
-        new YuPacket()
+        new YuPacket(),
+        new YuPacketPost()
     ];
 
     let results = []
@@ -48,7 +49,7 @@ function ShowShippingWay() {
     });
 
     results.sort(function(a,b){
-        if(a.cost == null) return 1;
+        if(a.cost == null || b.cost == null) return 0;
         
         if(a.cost < b.cost) return 1;
         if(a.cost > b.cost) return -1;
@@ -164,6 +165,34 @@ class YuPacket extends ShippingWay {
         
         const totalLength = param.vertical + param.horizontal + param.thickness;
         if(totalLength > this.totalLengthLimit) return null;
+
+        return this.cost;
+    }
+}
+
+class YuPacketPost extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "ゆうパケットポスト";
+        this.cost = 265;
+
+        this.paramRanges = {
+            weight: new ParamRange(0, 2000),
+            vertical: new ParamRange(0, 32.7),
+            horizontal: new ParamRange(0, 22.8),
+            thickness: new ParamRange(0, 3)
+        };
+    }
+
+    GetCost(param) {
+        for (const key in param) {
+            if (!this.paramRanges.hasOwnProperty(key))  return;
+
+            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+                return null;
+            }
+        }
 
         return this.cost;
     }
