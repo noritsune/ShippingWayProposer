@@ -34,19 +34,27 @@ function ShowShippingWay() {
 
     let param = new Param(input.weight, input.width, input.depth, input.height);
     let shippingWays = [
-        new Nekopos("ネコポス"),
-        new Nekopos("ねこぽす"),
-        new Nekopos("にゃんポス")
-    ]
+        new Nekopos()
+    ];
 
-    let costs = {}
+    let results = []
     shippingWays.forEach(way => {
-        costs[way.name] = way.GetCost(param);
+        results.push({
+            way: way,
+            name: way.name,
+            cost: way.GetCost(param)
+        });
     });
 
-    for (const key in costs) {
-        AddResultElement(key, costs[key]);
-    }
+    results.sort(function(a,b){
+        if(a.cost < b.cost) return -1;
+        if(a.cost > b.cost) return 1;
+        return 0;
+    });
+
+    results.forEach(result => {
+        AddResultElement(result.name, result.cost);
+    });
 }
 
 function AddResultElement(name, cost) {
@@ -98,10 +106,10 @@ class ParamRange {
 }
 
 class Nekopos extends ShippingWay {
-    constructor(name) {
+    constructor() {
         super();
         
-        this.name = name;
+        this.name = "ネコポス";
         this.cost = 175;
 
         this.paramRanges = {
