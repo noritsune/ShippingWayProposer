@@ -28,16 +28,40 @@ function ButtonMakeEnable() {
 function ShowShippingWay() {
     let input = GetAllInputs();
 
-    //TODO: 配送方法を表示する
+    document.getElementById("resultTitle").innerText = "～結果発表～";
+    document.getElementById("resultList").innerHTML = "";
+
+
     let param = new Param(input.weight, input.width, input.depth, input.height);
-    let nekopos = new Nekopos();
-    let cost = nekopos.GetCost(param);
-    const resultText = document.getElementById("result");
-    if(cost > 0) {
-        resultText.innerText = "費用：" + cost + "円";
-    } else {
-        resultText.innerText = "送れません";
+    let shippingWays = [
+        new Nekopos("ネコポス"),
+        new Nekopos("ねこぽす"),
+        new Nekopos("にゃんポス")
+    ]
+
+    let costs = {}
+    shippingWays.forEach(way => {
+        costs[way.name] = way.GetCost(param);
+    });
+
+    for (const key in costs) {
+        AddResultElement(key, costs[key]);
     }
+}
+
+function AddResultElement(name, cost) {
+    const resultList = document.getElementById("resultList");
+    const before = "<h5 class=\"element\"><li>";
+    const after = "</li></h5>";
+    
+    let middle = "名前：" + name;
+    if(cost > 0) {
+        middle += ", 費用：" + cost + "円"
+    } else {
+        middle += ", 送れません";
+    }
+
+    resultList.insertAdjacentHTML("afterbegin", before + middle + after);
 }
 
 class Param{
@@ -51,12 +75,14 @@ class Param{
 
 class ShippingWay {
     constructor() {
-
+        
+        this.name = "なし";
+        this.cost = -1;
     }
 
     //価格を返す。送れない場合は-1を返す
     GetCost() {
-        return -1;
+        return this.cost;
     }
 }
 
@@ -72,35 +98,27 @@ class ParamRange {
 }
 
 class Nekopos extends ShippingWay {
-    constructor() {
+    constructor(name) {
         super();
-
+        
+        this.name = name;
         this.cost = 175;
-        this.weightRange = new ParamRange(0, 1000);
-        this.verticalRange = new ParamRange(23, 31.2);
-        this.horizontalRange = new ParamRange(11.5, 22.8);
-        this.thicknessRange = new ParamRange(0, 3);
+
+        this.paramRanges = {
+            weight: new ParamRange(0, 1000),
+            vertical: new ParamRange(23, 31.2),
+            horizontal: new ParamRange(11.5, 22.8),
+            thickness: new ParamRange(0, 3)
+        };
     }
 
     GetCost(param) {
-        if(this.weightRange.IsOutOfRange(param.weight)) {
-            console.log("重さが範囲外です");
-            return -1;
-        }
-        
-        if(this.verticalRange.IsOutOfRange(param.vertical)) {
-            console.log("縦が範囲外です");
-            return -1;
-        }
-        
-        if(this.horizontalRange.IsOutOfRange(param.horizontal)) {
-            console.log("横が範囲外です");
-            return -1;
-        }
-        
-        if(this.thicknessRange.IsOutOfRange(param.thickness)) {
-            console.log("厚さが範囲外です");
-            return -1;
+        for (const key in param) {
+            if (!this.paramRanges.hasOwnProperty(key))  return;
+
+            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+                return -1;
+            }
         }
 
         return this.cost;

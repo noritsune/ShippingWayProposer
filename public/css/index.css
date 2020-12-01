@@ -82,10 +82,6 @@ label.required:after {
     content: "必須";
 }
 
-#result .title {
-
-}
-
 #result .element {
     max-width: 500px;
     margin: auto;
@@ -93,4 +89,5 @@ label.required:after {
     border-radius: 10px;
     background: #ecd982;
     box-shadow:  5px 5px 15px #d5b8b7;
+    text-align: left;
 }
