@@ -90,4 +90,5 @@ label.required:after {
     background: #ecd982;
     box-shadow:  5px 5px 15px #d5b8b7;
     text-align: left;
+    padding: 0.5rem;
 }
