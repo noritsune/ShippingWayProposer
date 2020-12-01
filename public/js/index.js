@@ -50,8 +50,10 @@ function ShowShippingWay() {
     });
 
     results.sort(function(a,b){
-        if(a.cost == null || b.cost == null) return 0;
-        
+        if(a.cost == null && b.cost == null) return 0;
+        if(a.cost != null && b.cost == null) return 1;
+        if(a.cost == null && b.cost != null) return -1;
+
         if(a.cost < b.cost) return 1;
         if(a.cost > b.cost) return -1;
         return 0;
@@ -67,11 +69,11 @@ function AddResultElement(name, cost) {
     const before = "<h5 class=\"element\"><li>";
     const after = "</li></h5>";
     
-    let middle = "名前：" + name;
+    let middle = "<span>名前：" + name + "</span>";
     if(cost == null) {
-        middle += ", 送れません";
+        middle += ", <span>送れません</span>";
     } else {
-        middle += ", 費用：" + cost + "円"
+        middle += ", <span>費用：" + cost + "円</span>"
     }
 
     resultList.insertAdjacentHTML("afterbegin", before + middle + after);
