@@ -36,7 +36,8 @@ function ShowShippingWay() {
     let shippingWays = [
         new Nekopos(),
         new YuPacket(),
-        new YuPacketPost()
+        new YuPacketPost(),
+        new FixedFormMail()
     ];
 
     let results = []
@@ -109,6 +110,7 @@ class ParamRange {
     }
 }
 
+//参考：https://pj.mercari.com/mercari-spot/mercari_school_list.pdf
 class Nekopos extends ShippingWay {
     constructor() {
         super();
@@ -195,5 +197,34 @@ class YuPacketPost extends ShippingWay {
         }
 
         return this.cost;
+    }
+}
+
+class FixedFormMail extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "定形郵便";
+        this.cost_lower25 = 84;
+        this.cost_lower50 = 94;
+
+        this.paramRanges = {
+            weight: new ParamRange(0, 50),
+            vertical: new ParamRange(14, 23.5),
+            horizontal: new ParamRange(9, 12),
+            thickness: new ParamRange(0, 1)
+        };
+    }
+
+    GetCost(param) {
+        for (const key in param) {
+            if (!this.paramRanges.hasOwnProperty(key))  return;
+
+            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+                return null;
+            }
+        }
+
+        return param.weight <= 25 ? this.cost_lower25 : this.cost_lower50;
     }
 }
