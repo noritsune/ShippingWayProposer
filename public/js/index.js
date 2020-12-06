@@ -32,7 +32,13 @@ function ShowShippingWay() {
     document.getElementById("resultList").innerHTML = "";
 
 
-    let param = new Param(parseFloat(input.weight), parseFloat(input.width), parseFloat(input.depth), parseFloat(input.height));
+    let param = new Param(
+        parseFloat(input.weight), 
+        parseFloat(input.width), 
+        parseFloat(input.depth), 
+        parseFloat(input.height),
+        parseFloat(input.width) + parseFloat(input.depth) + parseFloat(input.height)
+    );
     let shippingWays = [
         new Nekopos(),
         new YuPacket(),
@@ -80,24 +86,43 @@ function AddResultElement(name, cost) {
 }
 
 class Param{
-    constructor(weight, vertical, horizontal, thickness) {
+    //totalLengthをnullにすれば3辺合計の制限は無い
+    constructor(weight, vertical, horizontal, thickness, totalLength) {
         this.weight = weight;
         this.vertical = vertical;
         this.horizontal = horizontal;
         this.thickness = thickness;
+        this.totalLength = totalLength;
+    }
+
+    IsInRange(param) {
+        for (const key in param) {
+            if(!this.hasOwnProperty(key))  continue;
+            if(this[key] == null) continue;
+            
+            if(param[key] > this[key]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
 class ShippingWay {
-    constructor() {
-        
-        this.name = "なし";
-        this.cost = null;
+    constructor(name, cost, paramLimits) {
+        this.name = name;
+        this.cost = cost;
+        this.paramLimits = paramLimits;
     }
 
-    //価格を返す。送れない場合は-1を返す
-    GetCost() {
-        return this.cost;
+    //価格を返す。送れない場合はnullを返す
+    GetCost(param) {
+        if(this.paramLimits.IsInRange(param)) {
+            return this.cost;
+        }
+
+        return null;
     }
 }
 
@@ -105,28 +130,10 @@ class ShippingWay {
 class Nekopos extends ShippingWay {
     constructor() {
         super();
-        
+
         this.name = "ネコポス";
         this.cost = 175;
-
-        this.paramLimits = {
-            weight: 1000,
-            vertical: 31.2,
-            horizontal: 22.8,
-            thickness: 3
-        };
-    }
-
-    GetCost(param) {
-        for (const key in param) {
-            if (!this.paramLimits.hasOwnProperty(key))  return;
-
-            if(param[key] > this.paramLimits[key]) {
-                return null;
-            }
-        }
-
-        return this.cost;
+        this.paramLimits = new Param(1000, 31.2, 22.8, 3, null);
     }
 }
 
@@ -136,30 +143,7 @@ class YuPacket extends ShippingWay {
         
         this.name = "ゆうパケット";
         this.cost = 200;
-
-        this.paramLimits = {
-            weight: 1000,
-            vertical: 34,
-            horizontal: 34,
-            thickness: 3
-        };
-
-        this.totalLengthLimit = 60;
-    }
-
-    GetCost(param) {
-        for (const key in param) {
-            if (!this.paramLimits.hasOwnProperty(key))  return;
-
-            if(param[key] > this.paramLimits[key]) {
-                return null;
-            }
-        }
-        
-        const totalLength = param.vertical + param.horizontal + param.thickness;
-        if(totalLength > this.totalLengthLimit) return null;
-
-        return this.cost;
+        this.paramLimits = new Param(1000, 34, 34, 3, 60);
     }
 }
 
@@ -169,25 +153,7 @@ class YuPacketPost extends ShippingWay {
         
         this.name = "ゆうパケットポスト";
         this.cost = 265;
-
-        this.paramLimits = {
-            weight: 2000,
-            vertical: 32.7,
-            horizontal: 22.8,
-            thickness: 3
-        };
-    }
-
-    GetCost(param) {
-        for (const key in param) {
-            if (!this.paramLimits.hasOwnProperty(key))  return;
-
-            if(param[key] > this.paramLimits[key]) {
-                return null;
-            }
-        }
-
-        return this.cost;
+        this.paramLimits = new Param(2000, 32.7, 22.8, 3, null);
     }
 }
 
@@ -196,26 +162,23 @@ class FixedFormMail extends ShippingWay {
         super();
         
         this.name = "定形郵便";
-        this.cost_lower25 = 84;
-        this.cost_lower50 = 94;
-
-        this.paramLimits = {
-            weight: 50,
-            vertical: 23.5,
-            horizontal: 12,
-            thickness: 1
-        };
+        this.cost = null;
+        this.costByWeights = [
+            {
+                weightLimit: 25,
+                cost: 84
+            },
+            {
+                weightLimit: 50,
+                cost: 94
+            }
+        ]
+        this.paramLimits = new Param(50, 23.5, 12, 1, null);
     }
 
     GetCost(param) {
-        for (const key in param) {
-            if (!this.paramLimits.hasOwnProperty(key))  return;
+        this.cost = this.costByWeights.find((costByWeight) => costByWeight.weightLimit >= param.weight).cost;
 
-            if(param[key] > this.paramLimits[key]) {
-                return null;
-            }
-        }
-
-        return param.weight <= 25 ? this.cost_lower25 : this.cost_lower50;
+        return super.GetCost(param);
     }
 }
