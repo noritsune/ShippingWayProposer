@@ -43,7 +43,10 @@ function ShowShippingWay() {
         new Nekopos(),
         new YuPacket(),
         new YuPacketPost(),
-        new FixedFormMail()
+        new FixedFormMail(),
+        new ClickPost(),
+        new SmartLetter(),
+        new LetterPackLite()
     ];
 
     let results = []
@@ -195,8 +198,47 @@ class FixedFormMail extends ShippingWay {
     }
 
     GetCost(param) {
-        this.cost = this.costByWeights.find((costByWeight) => costByWeight.weightLimit >= param.weight).cost;
+        let costByWeight = this.costByWeights.find((element) => element.weightLimit >= param.weight);
+        if(costByWeight != null) {
+            this.cost = costByWeight.cost;
+        }
 
         return super.GetCost(param);
     }
+}
+
+class ClickPost extends ShippingWay {
+    constructor() {
+        super();
+
+        this.name = "クリックポスト";
+        this.cost = 198;
+        this.paramLimits = new Param(1000, 34, 25, 3, null);
+    }
+}
+
+class SmartLetter extends ShippingWay {
+    constructor() {
+        super();
+
+        this.name = "スマートレター";
+        this.cost = 180;
+        this.paramLimits = new Param(1000, 25, 17, 2, null);
+    }
+}
+
+class LetterPackLite extends ShippingWay {
+    constructor() {
+        super();
+
+        this.name = "レターパックライト";
+        this.cost = 370;
+        this.paramLimits = new Param(4000, 34, 24.8, 3, null);
+    }
+}
+
+//レターパックプラスは厚さに上限が無く、縦横と厚さに相関があるため実装が重い
+//よって未実装
+class LetterPackPlus extends ShippingWay {
+    
 }
