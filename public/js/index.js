@@ -101,17 +101,6 @@ class ShippingWay {
     }
 }
 
-class ParamRange {
-    constructor(min, max) {
-        this.min = min;
-        this.max = max;
-    }
-
-    IsOutOfRange(val) {
-        return val < this.min || val > this.max;
-    }
-}
-
 //参考：https://pj.mercari.com/mercari-spot/mercari_school_list.pdf
 class Nekopos extends ShippingWay {
     constructor() {
@@ -120,19 +109,19 @@ class Nekopos extends ShippingWay {
         this.name = "ネコポス";
         this.cost = 175;
 
-        this.paramRanges = {
-            weight: new ParamRange(0, 1000),
-            vertical: new ParamRange(23, 31.2),
-            horizontal: new ParamRange(11.5, 22.8),
-            thickness: new ParamRange(0, 3)
+        this.paramLimits = {
+            weight: 1000,
+            vertical: 31.2,
+            horizontal: 22.8,
+            thickness: 3
         };
     }
 
     GetCost(param) {
         for (const key in param) {
-            if (!this.paramRanges.hasOwnProperty(key))  return;
+            if (!this.paramLimits.hasOwnProperty(key))  return;
 
-            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+            if(param[key] > this.paramLimits[key]) {
                 return null;
             }
         }
@@ -148,11 +137,11 @@ class YuPacket extends ShippingWay {
         this.name = "ゆうパケット";
         this.cost = 200;
 
-        this.paramRanges = {
-            weight: new ParamRange(0, 1000),
-            vertical: new ParamRange(0, 34),
-            horizontal: new ParamRange(0, 34),
-            thickness: new ParamRange(0, 3)
+        this.paramLimits = {
+            weight: 1000,
+            vertical: 34,
+            horizontal: 34,
+            thickness: 3
         };
 
         this.totalLengthLimit = 60;
@@ -160,9 +149,9 @@ class YuPacket extends ShippingWay {
 
     GetCost(param) {
         for (const key in param) {
-            if (!this.paramRanges.hasOwnProperty(key))  return;
+            if (!this.paramLimits.hasOwnProperty(key))  return;
 
-            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+            if(param[key] > this.paramLimits[key]) {
                 return null;
             }
         }
@@ -181,19 +170,19 @@ class YuPacketPost extends ShippingWay {
         this.name = "ゆうパケットポスト";
         this.cost = 265;
 
-        this.paramRanges = {
-            weight: new ParamRange(0, 2000),
-            vertical: new ParamRange(0, 32.7),
-            horizontal: new ParamRange(0, 22.8),
-            thickness: new ParamRange(0, 3)
+        this.paramLimits = {
+            weight: 2000,
+            vertical: 32.7,
+            horizontal: 22.8,
+            thickness: 3
         };
     }
 
     GetCost(param) {
         for (const key in param) {
-            if (!this.paramRanges.hasOwnProperty(key))  return;
+            if (!this.paramLimits.hasOwnProperty(key))  return;
 
-            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+            if(param[key] > this.paramLimits[key]) {
                 return null;
             }
         }
@@ -210,19 +199,19 @@ class FixedFormMail extends ShippingWay {
         this.cost_lower25 = 84;
         this.cost_lower50 = 94;
 
-        this.paramRanges = {
-            weight: new ParamRange(0, 50),
-            vertical: new ParamRange(14, 23.5),
-            horizontal: new ParamRange(9, 12),
-            thickness: new ParamRange(0, 1)
+        this.paramLimits = {
+            weight: 50,
+            vertical: 23.5,
+            horizontal: 12,
+            thickness: 1
         };
     }
 
     GetCost(param) {
         for (const key in param) {
-            if (!this.paramRanges.hasOwnProperty(key))  return;
+            if (!this.paramLimits.hasOwnProperty(key))  return;
 
-            if(this.paramRanges[key].IsOutOfRange(param[key])) {
+            if(param[key] > this.paramLimits[key]) {
                 return null;
             }
         }
