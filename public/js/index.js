@@ -44,6 +44,7 @@ function ShowShippingWay() {
         new YuPacket(),
         new YuPacketPost(),
         new FixedFormMail(),
+        new NonFixedFormMail(),
         new ClickPost(),
         new SmartLetter(),
         new LetterPackLite(),
@@ -204,6 +205,101 @@ class FixedFormMail extends ShippingWay {
             this.cost = costByWeight.cost;
         }
 
+        return super.GetCost(param);
+    }
+}
+
+class NonFixedFormMail extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "定形外郵便";
+
+        this.cost = null;
+        this.costByWeights_standard = [
+            {
+                weightLimit: 50,
+                cost: 120
+            },
+            {
+                weightLimit: 100,
+                cost: 140
+            },
+            {
+                weightLimit: 150,
+                cost: 210
+            },
+            {
+                weightLimit: 250,
+                cost: 250
+            },
+            {
+                weightLimit: 500,
+                cost: 390
+            },
+            {
+                weightLimit: 1000,
+                cost: 580
+            }
+        ];
+        this.costByWeights_nonStandard = [
+            {
+                weightLimit: 50,
+                cost: 200
+            },
+            {
+                weightLimit: 100,
+                cost: 220
+            },
+            {
+                weightLimit: 150,
+                cost: 300
+            },
+            {
+                weightLimit: 250,
+                cost: 350
+            },
+            {
+                weightLimit: 500,
+                cost: 510
+            },
+            {
+                weightLimit: 1000,
+                cost: 710
+            },
+            {
+                weightLimit: 2000,
+                cost: 1040
+            },
+            {
+                weightLimit: 4000,
+                cost: 1350
+            }
+        ];
+
+        this.paramLimits = null;
+        this.paramLimits_standard = new Param(1000, 34, 25, 3, null);
+        this.paramLimits_nonStandard = new Param(4000, 60, 60, 60, 90);
+    }
+
+    GetCost(param) {
+        let costByWeight_standard = this.costByWeights_standard.find((element) => element.weightLimit >= param.weight);
+        if(costByWeight_standard != null) {
+            this.cost = costByWeight_standard.cost;
+        }
+        
+        this.paramLimits = this.paramLimits_standard;
+        let result = super.GetCost(param);
+        if(result != null) {
+            return result;
+        }
+
+        let costByWeight_nonStandard = this.costByWeights_nonStandard.find((element) => element.weightLimit >= param.weight);
+        if(costByWeight_nonStandard != null) {
+            this.cost = costByWeight_nonStandard.cost;
+        }
+        
+        this.paramLimits = this.paramLimits_nonStandard;
         return super.GetCost(param);
     }
 }
