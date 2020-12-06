@@ -31,12 +31,19 @@ function ShowShippingWay() {
     document.getElementById("resultTitle").innerText = "～結果発表～";
     document.getElementById("resultList").innerHTML = "";
 
-
-    let param = new Param(
-        parseFloat(input.weight), 
+    //各辺の入力順に関わらず、判定は長い辺からチェックするため降順にする
+    let length = [
         parseFloat(input.width), 
         parseFloat(input.depth), 
-        parseFloat(input.height),
+        parseFloat(input.height)
+    ]
+    length.sort((a, b) => b - a);
+
+    let param = new Param(
+        parseFloat(input.weight),
+        length[0],
+        length[1],
+        length[2],
         parseFloat(input.width) + parseFloat(input.depth) + parseFloat(input.height)
     );
     let shippingWays = [
