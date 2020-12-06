@@ -353,6 +353,6 @@ class YuPacketPlus extends ShippingWay {
 
         this.name = "ゆうパケットプラス";
         this.cost = 440;
-        this.paramLimits = new Param(2000, 17, 24, 7, null);
+        this.paramLimits = new Param(2000, 24, 17, 7, null);
     }
 }
