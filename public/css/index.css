@@ -1,7 +1,9 @@
 body {
+    max-width: 500px;
     padding: 10px;
     height: 100vh;
     text-align: center;
+    margin: auto;
 }
 
 span {
@@ -33,7 +35,6 @@ span {
 }
 
 #inputForm {
-    max-width: 500px;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 40px;
@@ -83,7 +84,7 @@ label.required:after {
 }
 
 #result .element {
-    max-width: 500px;
+    width: 100%;
     margin: auto;
     margin-top: 20px;
     border-radius: 10px;
