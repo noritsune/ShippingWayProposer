@@ -68,6 +68,24 @@ function ShowShippingWay() {
     results.forEach(result => {
         AddResultElement(result.name, result.cost);
     });
+    
+    //結果の各行を右からスライドイン
+    $("#resultList > .element")
+        .css({
+            left : '100px',
+            opacity: 0
+        })
+        .each(function(i){
+            $(this)
+                .delay(300 * i)
+                .animate({
+                    left : '0',
+                    opacity: 1
+                }, 300);
+        });
+
+    //比較ボタンを押下済みか示すために無効化
+    $("#submitButton").prop("disabled", true);
 }
 
 function AddResultElement(name, cost) {

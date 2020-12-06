@@ -83,6 +83,10 @@ label.required:after {
     content: "必須";
 }
 
+#result {
+    position: absolute;
+}
+
 #result .element {
     width: 100%;
     margin: auto;
@@ -92,4 +96,5 @@ label.required:after {
     box-shadow:  5px 5px 15px #d5b8b7;
     text-align: left;
     padding: 0.5rem;
+    position: relative;
 }
