@@ -84,7 +84,7 @@ label.required:after {
 }
 
 #result {
-    position: absolute;
+    /* position: absolute; */
 }
 
 #result .element {
