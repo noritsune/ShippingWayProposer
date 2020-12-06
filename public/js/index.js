@@ -46,7 +46,8 @@ function ShowShippingWay() {
         new FixedFormMail(),
         new ClickPost(),
         new SmartLetter(),
-        new LetterPackLite()
+        new LetterPackLite(),
+        new YuPacketPlus()
     ];
 
     let results = []
@@ -241,4 +242,14 @@ class LetterPackLite extends ShippingWay {
 //よって未実装
 class LetterPackPlus extends ShippingWay {
     
+}
+
+class YuPacketPlus extends ShippingWay {
+    constructor() {
+        super();
+
+        this.name = "ゆうパケットプラス";
+        this.cost = 440;
+        this.paramLimits = new Param(2000, 17, 24, 7, null);
+    }
 }
