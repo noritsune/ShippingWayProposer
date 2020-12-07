@@ -46,6 +46,7 @@ function ShowShippingWay() {
         length[2],
         parseFloat(input.width) + parseFloat(input.depth) + parseFloat(input.height)
     );
+    
     let shippingWays = [
         new Nekopos(),
         new YuPacket(),
@@ -57,7 +58,8 @@ function ShowShippingWay() {
         new LetterPackLite(),
         new YuPacketPlus(),
         new HomeDeliveryCompact(),
-        new HomeDelivery()
+        new HomeDelivery(),
+        new YuPack()
     ];
 
     let results = []
@@ -434,6 +436,43 @@ class HomeDelivery extends ShippingWay {
         });
         if(costByTotalLengthAndWeight != null) {
             this.cost = costByTotalLengthAndWeight.cost;
+        }
+
+        return super.GetCost(param);
+    }
+}
+
+class YuPack extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "ゆうパック";
+
+        this.cost = null;
+        this.costByTotalLengthes = [
+            {
+                totalLengthLimit: 60,
+                cost: 700
+            },
+            {
+                totalLengthLimit: 80,
+                cost: 800
+            },
+            {
+                totalLengthLimit: 100,
+                cost: 1000
+            }
+        ];
+
+        this.paramLimits = new Param(25000, null, null, null, 100);
+    }
+
+    GetCost(param) {
+        let costByTotalLength = this.costByTotalLengthes.find((element) => {
+            return element.totalLengthLimit >= param.totalLength;
+        });
+        if(costByTotalLength != null) {
+            this.cost = costByTotalLength.cost;
         }
 
         return super.GetCost(param);
