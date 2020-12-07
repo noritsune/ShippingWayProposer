@@ -55,7 +55,8 @@ function ShowShippingWay() {
         new ClickPost(),
         new SmartLetter(),
         new LetterPackLite(),
-        new YuPacketPlus()
+        new YuPacketPlus(),
+        new HomeDeliveryCompact()
     ];
 
     let results = []
@@ -354,5 +355,31 @@ class YuPacketPlus extends ShippingWay {
         this.name = "ゆうパケットプラス";
         this.cost = 440;
         this.paramLimits = new Param(2000, 24, 17, 7, null);
+    }
+}
+
+class HomeDeliveryCompact extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "宅急便コンパクト";
+        this.cost = 450;
+
+        this.paramLimits = null;
+        //厚さ0.8の根拠
+        //https://faq.kuronekoyamato.co.jp/app/answers/detail/a_id/3108/~/%E5%AE%85%E6%80%A5%E4%BE%BF%E3%82%B3%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E3%81%AE%E8%96%84%E5%9E%8B%E3%81%AF%E3%80%81%E3%81%A9%E3%82%8C%E3%81%8F%E3%82%89%E3%81%84%E3%81%AE%E5%8E%9A%E3%81%BF%E3%81%AE%E3%82%82%E3%81%AE%E3%81%BE%E3%81%A7%E5%85%A5%E3%82%8A%E3%81%BE%E3%81%99%E3%81%8B%3F#:~:text=%E5%AE%85%E6%80%A5%E4%BE%BF%E3%82%B3%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88-,%E5%AE%85%E6%80%A5%E4%BE%BF%E3%82%B3%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E3%81%AE%E8%96%84%E5%9E%8B%E3%81%AF%E3%80%81%E3%81%A9%E3%82%8C%E3%81%8F%E3%82%89%E3%81%84%E3%81%AE%E5%8E%9A%E3%81%BF%E3%81%AE%E3%82%82%E3%81%AE,%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E3%81%8C%E3%81%A7%E3%81%8D%E3%81%BE%E3%81%99%E3%80%82
+        this.paramLimits_thinBox = new Param(null, 34, 24.8, 0.8, null);
+        this.paramLimits_normalBox = new Param(null, 25, 20, 5, null);
+    }
+
+    GetCost(param) {
+        this.paramLimits = this.paramLimits_thinBox;
+        let result = super.GetCost(param);
+        if(result != null) {
+            return result;
+        }
+        
+        this.paramLimits = this.paramLimits_normalBox;
+        return super.GetCost(param);
     }
 }
