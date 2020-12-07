@@ -108,4 +108,6 @@ footer {
     padding: 15px 0px;
     position: absolute;
     bottom: 0; /*下に固定*/
+    color: lightgray;
+    font-style: italic;
 }
