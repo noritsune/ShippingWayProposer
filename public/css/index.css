@@ -90,7 +90,11 @@ label.required:after {
     content: "必須";
 }
 
-#result .element {
+#resultList {
+    padding-inline-start: 2em;
+}
+
+#resultList .element {
     width: 100%;
     margin: auto;
     margin-top: 20px;
