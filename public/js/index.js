@@ -59,7 +59,8 @@ function ShowShippingWay() {
         new YuPacketPlus(),
         new HomeDeliveryCompact(),
         new HomeDelivery(),
-        new YuPack()
+        new YuPack(),
+        new TanoMeruMail()
     ];
 
     let results = []
@@ -465,6 +466,67 @@ class YuPack extends ShippingWay {
         ];
 
         this.paramLimits = new Param(25000, null, null, null, 100);
+    }
+
+    GetCost(param) {
+        let costByTotalLength = this.costByTotalLengthes.find((element) => {
+            return element.totalLengthLimit >= param.totalLength;
+        });
+        if(costByTotalLength != null) {
+            this.cost = costByTotalLength.cost;
+        }
+
+        return super.GetCost(param);
+    }
+}
+
+class TanoMeruMail extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "たのメル便";
+
+        this.cost = null;
+        this.costByTotalLengthes = [
+            {
+                totalLengthLimit: 80,
+                cost: 1700
+            },
+            {
+                totalLengthLimit: 120,
+                cost: 2400
+            },
+            {
+                totalLengthLimit: 160,
+                cost: 3400
+            },
+            {
+                totalLengthLimit: 200,
+                cost: 5000
+            },
+            {
+                totalLengthLimit: 250,
+                cost: 8600
+            },
+            {
+                totalLengthLimit: 300,
+                cost: 12000
+            },
+            {
+                totalLengthLimit: 350,
+                cost: 18500
+            },
+            {
+                totalLengthLimit: 400,
+                cost: 25400
+            },
+            {
+                totalLengthLimit: 450,
+                cost: 33000
+            }
+        ];
+
+        this.paramLimits = new Param(150000, 250, null, null, 450);
     }
 
     GetCost(param) {
