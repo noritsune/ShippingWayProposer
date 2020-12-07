@@ -56,7 +56,8 @@ function ShowShippingWay() {
         new SmartLetter(),
         new LetterPackLite(),
         new YuPacketPlus(),
-        new HomeDeliveryCompact()
+        new HomeDeliveryCompact(),
+        new HomeDelivery()
     ];
 
     let results = []
@@ -380,6 +381,61 @@ class HomeDeliveryCompact extends ShippingWay {
         }
         
         this.paramLimits = this.paramLimits_normalBox;
+        return super.GetCost(param);
+    }
+}
+
+class HomeDelivery extends ShippingWay {
+    constructor() {
+        super();
+        
+        this.name = "宅急便";
+
+        this.cost = null;
+        this.costByTotalLengthAndWeights = [
+            {
+                totalLengthLimit: 60,
+                weightLimit: 2000,
+                cost: 700
+            },
+            {
+                totalLengthLimit: 80,
+                weightLimit: 5000,
+                cost: 800
+            },
+            {
+                totalLengthLimit: 100,
+                weightLimit: 10000,
+                cost: 1000
+            },
+            {
+                totalLengthLimit: 120,
+                weightLimit: 15000,
+                cost: 1100
+            },
+            {
+                totalLengthLimit: 140,
+                weightLimit: 20000,
+                cost: 1300
+            },
+            {
+                totalLengthLimit: 160,
+                weightLimit: 25000,
+                cost: 1600
+            }
+        ];
+
+        this.paramLimits = new Param(null, null, null, null, 160);
+    }
+
+    GetCost(param) {
+        let costByTotalLengthAndWeight = this.costByTotalLengthAndWeights.find((element) => {
+            return element.totalLengthLimit >= param.totalLength && element.weightLimit >= param.weight
+        });
+        if(costByTotalLengthAndWeight != null) {
+            this.cost = costByTotalLengthAndWeight.cost;
+        }
+
         return super.GetCost(param);
     }
 }
