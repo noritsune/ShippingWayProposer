@@ -46,7 +46,7 @@ function ShowShippingWay() {
         length[2],
         parseFloat(input.width) + parseFloat(input.depth) + parseFloat(input.height)
     );
-    
+
     let shippingWays = [
         new Nekopos(),
         new YuPacket(),
@@ -109,11 +109,11 @@ function AddResultElement(name, cost) {
     const before = "<h5 class=\"element\"><li>";
     const after = "</li></h5>";
     
-    let middle = "<span>名前：" + name + "</span>";
+    let middle = "<span>" + name + ":</span> ";
     if(cost == null) {
-        middle += ", <span>送れません</span>";
+        middle += "<span>送れません</span>";
     } else {
-        middle += ", <span>費用：" + cost + "円</span>"
+        middle += "<span>" + cost + "円</span>"
     }
 
     resultList.insertAdjacentHTML("afterbegin", before + middle + after);
