@@ -109,18 +109,18 @@ function ShowShippingWay() {
 }
 
 function AddResultElement(name, cost) {
-    const resultList = document.getElementById("resultList");
-    const before = "<h5 class=\"element\"><li>";
-    const after = "</li></h5>";
+    cost = cost == null ? "送れません" : cost + "円";
+    let nameAndCostHtml = '<h5 class=\"element\"><li><span>$name</span>: <span>$cost</span></li></h5>';
+    nameAndCostHtml = nameAndCostHtml.replace("$name", name).replace("$cost", cost);
     
-    let middle = "<span>" + name + ":</span> ";
-    if(cost == null) {
-        middle += "<span>送れません</span>";
-    } else {
-        middle += "<span>" + cost + "円</span>"
-    }
+    let dropDownToggleHtml = '<a class="btn" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">$nameAndCost</a>';
+    dropDownToggleHtml = dropDownToggleHtml.replace("$nameAndCost", nameAndCostHtml);
+    
+    let dropDownItemHtml = '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink"><span class="dropdown-item">$discription</span></div>';
+    dropDownItemHtml = dropDownItemHtml.replace("$discription", "詳細");
 
-    resultList.insertAdjacentHTML("beforeend", before + middle + after);
+    const resultList = document.getElementById("resultList");
+    resultList.insertAdjacentHTML("beforeend", dropDownToggleHtml + dropDownItemHtml);
 }
 
 class Param{
