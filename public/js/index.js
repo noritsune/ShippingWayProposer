@@ -74,11 +74,11 @@ function ShowShippingWay() {
 
     results.sort(function(a,b){
         if(a.cost == null && b.cost == null) return 0;
-        if(a.cost != null && b.cost == null) return 1;
-        if(a.cost == null && b.cost != null) return -1;
+        if(a.cost != null && b.cost == null) return -1;
+        if(a.cost == null && b.cost != null) return 1;
 
-        if(a.cost < b.cost) return 1;
-        if(a.cost > b.cost) return -1;
+        if(a.cost < b.cost) return -1;
+        if(a.cost > b.cost) return 1;
         return 0;
     });
 
@@ -87,6 +87,7 @@ function ShowShippingWay() {
     });
     
     //結果の各行を右からスライドイン
+    let delayBy = 0;
     $("#resultList > .element")
         .css({
             left : '100px',
@@ -94,11 +95,13 @@ function ShowShippingWay() {
         })
         .each(function(i){
             $(this)
-                .delay(300 * i)
+                .delay(300 * delayBy)
                 .animate({
                     left : '0',
                     opacity: 1
                 }, 300);
+
+            if(results[i].cost != null) delayBy++;
         });
 
     //比較ボタンを押下済みか示すために無効化
@@ -117,7 +120,7 @@ function AddResultElement(name, cost) {
         middle += "<span>" + cost + "円</span>"
     }
 
-    resultList.insertAdjacentHTML("afterbegin", before + middle + after);
+    resultList.insertAdjacentHTML("beforeend", before + middle + after);
 }
 
 class Param{
