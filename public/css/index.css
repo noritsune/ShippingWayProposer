@@ -107,11 +107,18 @@ label.required:after {
 }
 
 footer {
-    width: 100%;
-    text-align: center;
     padding: 15px 0px;
     position: absolute;
+    width: 100%;
+    text-align: center;
     bottom: 0; /*下に固定*/
+}
+
+footer , footer a {
     color: lightgray;
     font-style: italic;
+}
+
+footer a {
+    text-decoration: underline;
 }
