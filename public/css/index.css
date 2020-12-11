@@ -102,13 +102,25 @@ label.required:after {
 #resultList .element {
     width: 100%;
     margin: auto;
-    margin-top: 20px;
     border-radius: 10px;
     background: #ecd982;
     box-shadow:  5px 5px 15px #d5b8b7;
     text-align: left;
     padding: 0.5rem;
     position: relative;
+}
+
+#resultList .caption {
+    text-align: center;
+    width: 100%;
+}
+
+#resultList .table {
+    margin: 0;
+}
+
+#resultList .dropdown-menu {
+    padding: 0;
 }
 
 footer {

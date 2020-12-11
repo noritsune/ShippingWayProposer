@@ -83,7 +83,7 @@ function ShowShippingWay() {
     });
 
     results.forEach(result => {
-        AddResultElement(result.name, result.cost);
+        AddResultElement(result);
     });
     
     //結果の各行を右からスライドイン
@@ -108,19 +108,18 @@ function ShowShippingWay() {
     $("#submitButton").prop("disabled", true);
 }
 
-function AddResultElement(name, cost) {
-    cost = cost == null ? "送れません" : cost + "円";
+function AddResultElement(result) {
+    let cost = result.cost == null ? "送れません" : result.cost + "円";
     let nameAndCostHtml = '<h5 class=\"element\"><li><span>$name</span>: <span>$cost</span></li></h5>';
-    nameAndCostHtml = nameAndCostHtml.replace("$name", name).replace("$cost", cost);
+    nameAndCostHtml = nameAndCostHtml.replace("$name", result.name).replace("$cost", cost);
     
     let dropDownToggleHtml = '<a class="btn" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">$nameAndCost</a>';
     dropDownToggleHtml = dropDownToggleHtml.replace("$nameAndCost", nameAndCostHtml);
     
-    let dropDownItemHtml = '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink"><span class="dropdown-item">$discription</span></div>';
-    dropDownItemHtml = dropDownItemHtml.replace("$discription", "詳細");
-
-    const resultList = document.getElementById("resultList");
-    resultList.insertAdjacentHTML("beforeend", dropDownToggleHtml + dropDownItemHtml);
+    let dropDownItemHtml = '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">$discription</div>';
+    dropDownItemHtml = dropDownItemHtml.replace("$discription", result.way.discription);
+    
+    $('<div class="dropdown">' + dropDownToggleHtml + dropDownItemHtml + '</div>').appendTo("#resultList");
 }
 
 class Param{
@@ -145,13 +144,38 @@ class Param{
 
         return true;
     }
+
+    GetDiscriptionTable() {
+        const table = 
+        `<table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">重さ</th>
+                    <th scope="col">幅</th>
+                    <th scope="col">奥行き</th>
+                    <th scope="col">厚さ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${this.weight}</td>
+                    <td>${this.vertical}</td>
+                    <td>${this.horizontal}</td>
+                    <td>${this.thickness}</td>
+                </tr>
+            </tbody>
+        </table>`;
+
+        return table;
+    }
 }
 
 class ShippingWay {
-    constructor(name, cost, paramLimits) {
+    constructor(name, cost, paramLimits, discription) {
         this.name = name;
         this.cost = cost;
         this.paramLimits = paramLimits;
+        this.discription = discription;
     }
 
     //価格を返す。送れない場合はnullを返す
@@ -172,6 +196,7 @@ class Nekopos extends ShippingWay {
         this.name = "ネコポス";
         this.cost = 175;
         this.paramLimits = new Param(1000, 31.2, 22.8, 3, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
