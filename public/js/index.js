@@ -88,7 +88,7 @@ function ShowShippingWay() {
     
     //結果の各行を右からスライドイン
     let delayBy = 0;
-    $("#resultList > .element")
+    $("#resultList .element")
         .css({
             left : '100px',
             opacity: 0
