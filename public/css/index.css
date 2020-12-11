@@ -72,6 +72,11 @@ input#weight, input#width, input#depth, input#height {
     margin: 5px;
 }
 
+#inputForm .size .element .supple {
+    color: gray;
+    font-size: small;
+}
+
 #inputForm button{
     margin-top: 20px;
 }
