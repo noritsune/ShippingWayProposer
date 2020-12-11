@@ -117,6 +117,7 @@ function AddResultElement(result) {
     dropDownToggleHtml = dropDownToggleHtml.replace("$nameAndCost", nameAndCostHtml);
     
     let dropDownItemHtml = '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">$discription</div>';
+    if(result.way.discription == null) result.way.discription = "上限値は分かりませんでした！"
     dropDownItemHtml = dropDownItemHtml.replace("$discription", result.way.discription);
     
     $('<div class="dropdown">' + dropDownToggleHtml + dropDownItemHtml + '</div>').appendTo("#resultList");
@@ -154,19 +155,25 @@ class Param{
                     <th scope="col">幅</th>
                     <th scope="col">奥行き</th>
                     <th scope="col">厚さ</th>
+                    <th scope="col">3辺の合計</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>${this.weight}</td>
-                    <td>${this.vertical}</td>
-                    <td>${this.horizontal}</td>
-                    <td>${this.thickness}</td>
+                    <td>${this.EscapeNull(this.weight)}</td>
+                    <td>${this.EscapeNull(this.vertical)}</td>
+                    <td>${this.EscapeNull(this.horizontal)}</td>
+                    <td>${this.EscapeNull(this.thickness)}</td>
+                    <td>${this.EscapeNull(this.totalLength)}</td>
                 </tr>
             </tbody>
         </table>`;
 
         return table;
+    }
+
+    EscapeNull(value) {
+        return value != null ? value : "なし";
     }
 }
 
@@ -207,6 +214,7 @@ class YuPacket extends ShippingWay {
         this.name = "ゆうパケット";
         this.cost = 200;
         this.paramLimits = new Param(1000, 34, 34, 3, 60);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
@@ -217,6 +225,7 @@ class YuPacketPost extends ShippingWay {
         this.name = "ゆうパケットポスト";
         this.cost = 265;
         this.paramLimits = new Param(2000, 32.7, 22.8, 3, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
@@ -237,6 +246,7 @@ class FixedFormMail extends ShippingWay {
             }
         ]
         this.paramLimits = new Param(50, 23.5, 12, 1, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 
     GetCost(param) {
@@ -351,6 +361,7 @@ class ClickPost extends ShippingWay {
         this.name = "クリックポスト";
         this.cost = 198;
         this.paramLimits = new Param(1000, 34, 25, 3, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
@@ -361,6 +372,7 @@ class SmartLetter extends ShippingWay {
         this.name = "スマートレター";
         this.cost = 180;
         this.paramLimits = new Param(1000, 25, 17, 2, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
@@ -371,6 +383,7 @@ class LetterPackLite extends ShippingWay {
         this.name = "レターパックライト";
         this.cost = 370;
         this.paramLimits = new Param(4000, 34, 24.8, 3, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
@@ -378,16 +391,6 @@ class LetterPackLite extends ShippingWay {
 //よって未実装
 class LetterPackPlus extends ShippingWay {
     
-}
-
-class YuPacketPlus extends ShippingWay {
-    constructor() {
-        super();
-
-        this.name = "ゆうパケットプラス";
-        this.cost = 440;
-        this.paramLimits = new Param(2000, 24, 17, 7, null);
-    }
 }
 
 class HomeDeliveryCompact extends ShippingWay {
@@ -456,7 +459,8 @@ class HomeDelivery extends ShippingWay {
             }
         ];
 
-        this.paramLimits = new Param(null, null, null, null, 160);
+        this.paramLimits = new Param(25000, null, null, null, 160);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 
     GetCost(param) {
@@ -468,6 +472,17 @@ class HomeDelivery extends ShippingWay {
         }
 
         return super.GetCost(param);
+    }
+}
+
+class YuPacketPlus extends ShippingWay {
+    constructor() {
+        super();
+
+        this.name = "ゆうパケットプラス";
+        this.cost = 440;
+        this.paramLimits = new Param(2000, 24, 17, 7, null);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 }
 
@@ -494,6 +509,7 @@ class YuPack extends ShippingWay {
         ];
 
         this.paramLimits = new Param(25000, null, null, null, 100);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 
     GetCost(param) {
@@ -555,6 +571,7 @@ class TanoMeruMail extends ShippingWay {
         ];
 
         this.paramLimits = new Param(150000, 250, null, null, 450);
+        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
     }
 
     GetCost(param) {
