@@ -110,17 +110,18 @@ label.required:after {
     position: relative;
 }
 
-#resultList .caption {
-    text-align: center;
-    width: 100%;
-}
-
 #resultList .table {
     margin: 0;
 }
 
 #resultList .dropdown-menu {
     padding: 0;
+    text-align: center;
+}
+
+#resultList .dropdown-menu .referenceLink {
+    background: lightyellow;
+    line-height: 3em;
 }
 
 footer {

@@ -203,7 +203,11 @@ class Nekopos extends ShippingWay {
         this.name = "ネコポス";
         this.cost = 175;
         this.paramLimits = new Param(1000, 31.2, 22.8, 3, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.kuronekoyamato.co.jp/ytc/business/send/services/nekoposu/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -214,7 +218,11 @@ class YuPacket extends ShippingWay {
         this.name = "ゆうパケット";
         this.cost = 200;
         this.paramLimits = new Param(1000, 34, 34, 3, 60);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/yu_packet/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -225,7 +233,11 @@ class YuPacketPost extends ShippingWay {
         this.name = "ゆうパケットポスト";
         this.cost = 265;
         this.paramLimits = new Param(2000, 32.7, 22.8, 3, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/yu_packetpost/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -246,7 +258,11 @@ class FixedFormMail extends ShippingWay {
             }
         ]
         this.paramLimits = new Param(50, 23.5, 12, 1, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/standard/one_size.html" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 
     GetCost(param) {
@@ -361,7 +377,11 @@ class ClickPost extends ShippingWay {
         this.name = "クリックポスト";
         this.cost = 198;
         this.paramLimits = new Param(1000, 34, 25, 3, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/clickpost/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -372,7 +392,11 @@ class SmartLetter extends ShippingWay {
         this.name = "スマートレター";
         this.cost = 180;
         this.paramLimits = new Param(1000, 25, 17, 2, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/smartletter/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -383,7 +407,11 @@ class LetterPackLite extends ShippingWay {
         this.name = "レターパックライト";
         this.cost = 370;
         this.paramLimits = new Param(4000, 34, 24.8, 3, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/letterpack/index.html#main" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -460,7 +488,11 @@ class HomeDelivery extends ShippingWay {
         ];
 
         this.paramLimits = new Param(25000, null, null, null, 160);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.kuronekoyamato.co.jp/ytc/customer/send/services/takkyubin/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 
     GetCost(param) {
@@ -482,7 +514,11 @@ class YuPacketPlus extends ShippingWay {
         this.name = "ゆうパケットプラス";
         this.cost = 440;
         this.paramLimits = new Param(2000, 24, 17, 7, null);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/yu_packetplus/index.html" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 }
 
@@ -509,7 +545,11 @@ class YuPack extends ShippingWay {
         ];
 
         this.paramLimits = new Param(25000, null, null, null, 100);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.post.japanpost.jp/service/you_pack/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 
     GetCost(param) {
@@ -571,7 +611,11 @@ class TanoMeruMail extends ShippingWay {
         ];
 
         this.paramLimits = new Param(150000, 250, null, null, 450);
-        this.discription = '<span class="caption">上限値</span>' + this.paramLimits.GetDiscriptionTable();
+        this.discription = `
+        <a class="referenceLink" href="https://www.mercari.com/jp/tanomeru/" target="_blank" rel="noopener noreferrer">公式サイト</a>
+        <h6 class="caption">上限値</h6>
+        ${this.paramLimits.GetDiscriptionTable()}
+        `;
     }
 
     GetCost(param) {
