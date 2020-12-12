@@ -98,6 +98,7 @@ label.required:after {
 #resultList {
     padding-inline-start: 2em;
     text-align: start;
+    margin-bottom: 50px;
 }
 
 #resultList .btn {
