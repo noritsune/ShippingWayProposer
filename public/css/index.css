@@ -53,6 +53,15 @@ span {
 
 #weight {
     margin: auto;
+    display: inline;
+}
+
+.btn-default {
+    border: 1px solid lightgray;
+}
+
+.toggle-handle {
+    background-color: white;
 }
 
 input#weight, input#width, input#depth, input#height {

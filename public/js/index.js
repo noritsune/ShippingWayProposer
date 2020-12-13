@@ -1,3 +1,13 @@
+let weightUnit = 1;
+
+$(function() {
+    $('[name="IsGramCheck"]').change(function() {
+        weightUnit = $('[name="IsGramCheck"]').prop('checked') ? 1 : 1000;
+
+        ButtonMakeEnable();
+    });
+});
+
 //入力フォームへの入力値を全て読んでオブジェクトで返す
 function GetAllInputs() {
     return {
@@ -40,7 +50,7 @@ function ShowShippingWay() {
     length.sort((a, b) => b - a);
 
     let param = new Param(
-        parseFloat(input.weight),
+        parseFloat(input.weight) * weightUnit,
         length[0],
         length[1],
         length[2],
@@ -160,7 +170,7 @@ class Param{
             </thead>
             <tbody>
                 <tr>
-                    <td>${this.EscapeNull(this.weight)}</td>
+                    <td>${this.EscapeNull(this.weight) / weightUnit}</td>
                     <td>${this.EscapeNull(this.vertical)}</td>
                     <td>${this.EscapeNull(this.horizontal)}</td>
                     <td>${this.EscapeNull(this.thickness)}</td>
