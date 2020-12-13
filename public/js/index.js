@@ -1,4 +1,7 @@
 let weightUnit = 1;
+let lengthOrder = {
+    
+}
 
 $(function() {
     $('[name="IsGramCheck"]').change(function() {
@@ -12,9 +15,9 @@ $(function() {
 function GetAllInputs() {
     return {
         weight: document.getElementById("weight").value,
-        width: document.getElementById("width").value,
-        depth: document.getElementById("depth").value,
-        height: document.getElementById("height").value,
+        vertical: document.getElementById("vertical").value,
+        horizontal: document.getElementById("horizontal").value,
+        thickness: document.getElementById("thickness").value,
     }
 }
 
@@ -43,9 +46,9 @@ function ShowShippingWay() {
 
     //各辺の入力順に関わらず、判定は長い辺からチェックするため降順にする
     let length = [
-        parseFloat(input.width), 
-        parseFloat(input.depth), 
-        parseFloat(input.height)
+        parseFloat(input.vertical), 
+        parseFloat(input.horizontal), 
+        parseFloat(input.thickness)
     ]
     length.sort((a, b) => b - a);
 
@@ -54,7 +57,7 @@ function ShowShippingWay() {
         length[0],
         length[1],
         length[2],
-        parseFloat(input.width) + parseFloat(input.depth) + parseFloat(input.height)
+        parseFloat(input.vertical) + parseFloat(input.horizontal) + parseFloat(input.thickness)
     );
 
     let shippingWays = [
