@@ -60,6 +60,10 @@ span {
     border: 1px solid lightgray;
 }
 
+.toggle {
+    vertical-align: top;
+}
+
 .toggle-handle {
     background-color: white;
 }
